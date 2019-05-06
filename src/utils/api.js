@@ -16,7 +16,7 @@ export function getInitialData () {
 }
 
 export function saveQuestionAnswer (info) {
-  return _saveLikeToggle(info)
+  return _saveQuestionAnswer(info)
 }
 
 export function saveQuestion (question) {
