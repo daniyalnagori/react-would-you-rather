@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { handleInitialData } from '../actions/shared'
 import Login from './Login'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+import Home from './Home';
+import QuestionForm from './QuestionForm';
+import Leaderboard from './Leaderboard';
+import NavigationBar from './NavigationBar';
 
 class App extends Component {
   componentDidMount() {
@@ -10,8 +15,12 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <Login />
+      <div className="App"> 
+        <Router>
+              <Route path="/" exact component={ Home }/> 
+              <Route path="/add" exact component={ QuestionForm }/>
+              <Route path="/leaderboard" component={ Leaderboard }/>
+        </Router>
       </div>
     )
   }
