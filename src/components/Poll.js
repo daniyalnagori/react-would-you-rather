@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Card, Button } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 
 class Poll extends Component {
     render() {
@@ -12,7 +13,7 @@ class Poll extends Component {
                     <Card.Text>
                         Would you rather
                     </Card.Text>
-                    <Button variant="primary" block>Poll</Button>
+                    <Link to={`/questions/${this.props.ques.id}`}><Button variant="primary" block onClick={this.routeChange}>View Poll</Button></Link>
                 </Card.Body>
             </Card>
         )

@@ -40,7 +40,7 @@ class QuestionForm extends Component {
                                 <span>Or</span>
                                 <Form.Control onChange={this.handleChange2} type="text" placeholder="Option 2" />
                                 </Form.Group>
-                                <Button variant="primary" onClick={this.onSubmit}>Add</Button>
+                                <Button variant="primary" onClick={this.onSubmit} block>Add</Button>
                             </Form>
                         </Card.Body>
                     </Card>
