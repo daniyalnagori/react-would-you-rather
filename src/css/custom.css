@@ -1,0 +1,11 @@
+.card {
+    flex-direction: row !important;
+    margin-top: 10px;
+}
+.card-img-top {
+    width: 25%;
+    height: 26%;
+    border-radius: 102px;
+    margin-top: 12px;
+    margin-left: 12px;
+}

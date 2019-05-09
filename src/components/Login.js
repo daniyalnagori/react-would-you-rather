@@ -6,8 +6,6 @@ import { Container, Col, Form } from 'react-bootstrap'
 import { setAuthedUser } from '../actions/authedUser'
 import '../css/login.css';
 
-
-
 class Login extends Component {
     state = {
         userId: null
