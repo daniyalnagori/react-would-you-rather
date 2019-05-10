@@ -1,51 +1,99 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Container ,Card, Form, Button, Col } from 'react-bootstrap'
+import { Container, Card, Form, Button, Col, ProgressBar, Badge } from 'react-bootstrap'
 import NavigationBar from './NavigationBar'
+import '../css/questionView.css'
 
 class QuestionView extends Component {
     render() {
+        let ques = this.props.q ? this.props.q : ''
+        let answerMarkOp1 = this.props.q ? this.props.q.optionOne.votes.includes(this.props.authedUser) : null
+        let answerMarkOp2 = this.props.q ? this.props.q.optionTwo.votes.includes(this.props.authedUser) : null
         return (
             <div>
-            <NavigationBar />
-            <Container>
-                <Col xs={6} md={6}>
-                    <Card>
-                        <Card.Img variant="top" src={this.props.author.avatarURL} />
-                        <Card.Body>
-                            <Card.Title>{this.props.author.name} asks</Card.Title>
-                            <Card.Text>
-                                Would you rather
-                            </Card.Text>
-                            <div className="mb-3">
-                                <Form.Check
-                                    type="radio"
-                                    id="1"
-                                    label={this.props.q ? this.props.q.optionOne.text : ''}
-                                />
+                <NavigationBar />
+                <Container>
+                    {answerMarkOp1 === true || answerMarkOp2 === true ? (
+                        <Col xs={6} md={6}>
+                            <Card>
+                                <Card.Img variant="top" src={this.props.author.avatarURL} />
+                                <Card.Body>
+                                    <Card.Title>Asked by {this.props.author.name}</Card.Title>
+                                    <Card.Text>
+                                        Results:
+                                    </Card.Text>
+                                    <div>
+                                        <div className="cell">
+                                            <div>
+                                                {answerMarkOp1 ? (
+                                                    <Badge pill variant="warning">
+                                                        Your Vote
+                                                    </Badge>
+                                                ) : ' '}
+                                            </div>
+                                            Would you rather {ques ? ques.optionOne.text : ''}
+                                            <ProgressBar now={ques ? (ques.optionOne.votes.length / (ques.optionOne.votes.length + ques.optionTwo.votes.length)) * 100 : ''}
+                                                label={`${ques ? (ques.optionOne.votes.length / (ques.optionOne.votes.length + ques.optionTwo.votes.length)) * 100 : ''}%`} />
+                                            <p>{ques ? `${ques.optionOne.votes.length} out of ${ques.optionTwo.votes.length + ques.optionOne.votes.length}` : ' '}</p>
+                                        </div>
+                                        <div className="cell">
+                                            <div>
+                                                {answerMarkOp2 ? (
+                                                    <Badge pill variant="warning">
+                                                        Your Vote
+                                                    </Badge>
+                                                ) : ' '}
+                                            </div>
+                                            Would you rather {ques ? ques.optionTwo.text : ''}
+                                            <ProgressBar now={ques ? (ques.optionOne.votes.length / (ques.optionOne.votes.length + ques.optionTwo.votes.length)) * 100 : ''}
+                                                label={`${this.props.q ? (ques.optionTwo.votes.length / (ques.optionOne.votes.length + ques.optionTwo.votes.length)) * 100 : ''}%`} />
+                                            <p>{ques ? `${ques.optionTwo.votes.length} out of ${ques.optionTwo.votes.length + ques.optionOne.votes.length}` : ' '}</p>
+                                        </div>
+                                    </div>
 
-                                <Form.Check
-                                    type="radio"
-                                    label={this.props.q ? this.props.q.optionTwo.text : ''}
-                                    id="2"
-                                />
-                            </div>
-                            <Button variant="primary" block>Submit</Button>
-                        </Card.Body>
-                    </Card>
-                </Col>
-            </Container>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                    ) : (
+                            <Col xs={6} md={6}>
+                                <Card>
+                                    <Card.Img variant="top" src={this.props.author.avatarURL} />
+                                    <Card.Body>
+                                        <Card.Title>{this.props.author.name} asks</Card.Title>
+                                        <Card.Text>
+                                            Would you rather
+                                        </Card.Text>
+                                        <div className="mb-3">
+                                            <Form.Check
+                                                type="radio"
+                                                id="1"
+                                                label={ques ? ques.optionOne.text : ''}
+                                            />
+
+                                            <Form.Check
+                                                type="radio"
+                                                label={ques ? ques.optionTwo.text : ''}
+                                                id="2"
+                                            />
+                                        </div>
+                                        <Button variant="primary" block>Submit</Button>
+                                    </Card.Body>
+                                </Card>
+                            </Col>
+                        )}
+                </Container>
             </div>
         )
     }
 }
 
-function mapStateToProps({ users, questions }, {match}) {
+function mapStateToProps({ users, questions, authedUser }, { match }) {
     let q = questions[match.params.id]
     let author = q ? users[q.author] : ''
     return {
-        q : questions[match.params.id],
-        author
+        q: questions[match.params.id],
+        author,
+        authedUser
     }
 }
 
