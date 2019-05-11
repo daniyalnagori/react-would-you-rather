@@ -1,15 +1,16 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Navbar, Button, Nav } from 'react-bootstrap'
+import { Navbar, Button, Nav, Image } from 'react-bootstrap'
 import { Link, Redirect } from 'react-router-dom'
 import { deleteAuthedUser } from '../actions/authedUser'
-
+import '../css/navbar.css'
 
 class NavigationBar extends Component {
     logout = () => {
         this.props.dispatch(deleteAuthedUser())
     }
     render() {
+        const { loggedInUser } = this.props
         if(this.props.authedUser === '') {
             return (
                 <Redirect to="/login" />
@@ -25,6 +26,8 @@ class NavigationBar extends Component {
                         <Link className="nav-link" to="/leaderboard">Leaderboard</Link>
                     </Nav>
                     <Nav>
+                        <div className="navText">Hello, {loggedInUser.name}</div>
+                        <Image src={loggedInUser.avatarURL} rounded />
                         <Button variant="outline-primary" onClick={this.logout}>Logout</Button>
                     </Nav>
                 </Navbar>
@@ -33,8 +36,9 @@ class NavigationBar extends Component {
     }
 }
 
-function mapStateToProps({authedUser}) {
+function mapStateToProps({ authedUser, users } ){
     return {
+        loggedInUser: users[authedUser],
         authedUser
     }
 }

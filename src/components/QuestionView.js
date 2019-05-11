@@ -19,6 +19,17 @@ class QuestionView extends Component {
         this.props.dispatch(handleAnswer(this.props.authedUser, this.props.match.params.id, this.state.selectedValue))
     }
     render() {
+        if(this.props.error) {
+            return (
+                <Container>
+                    <Col>
+                        <h1>404</h1>
+                        <p>The page not found</p>
+                    </Col>
+                </Container>
+            )
+        }
+
         let ques = this.props.q ? this.props.q : ''
         let answerMarkOp1 = this.props.q ? this.props.q.optionOne.votes.includes(this.props.authedUser) : null
         let answerMarkOp2 = this.props.q ? this.props.q.optionTwo.votes.includes(this.props.authedUser) : null
@@ -107,6 +118,13 @@ class QuestionView extends Component {
 }
 
 function mapStateToProps({ users, questions, authedUser }, { match }) {
+    if(questions[match.params.id] === undefined) {
+        const error = true;
+        return {
+            error
+        }
+    }
+
     let q = questions[match.params.id]
     let author = q ? users[q.author] : ''
     return {

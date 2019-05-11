@@ -4,7 +4,6 @@ import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 import { Container, Col, Form } from 'react-bootstrap'
 import { setAuthedUser } from '../actions/authedUser'
-import '../css/login.css';
 import { fakeAuth } from '../authentication/auth'
 import { Redirect } from 'react-router-dom'
 

@@ -1,0 +1,11 @@
+.rounded {
+    border-radius: 1.25rem!important;
+    height: 36px !important;
+    margin-right: 9px;
+}
+
+.navText {
+    color: white;
+    margin-right: 10px;
+    margin-top: 6px;
+}
