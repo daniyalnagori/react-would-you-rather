@@ -4,6 +4,8 @@ import NavigationBar from './NavigationBar';
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 import { Container, Col, Form } from 'react-bootstrap'
+import { handleSaveQuestion } from '../actions/shared'
+import { Link } from 'react-router-dom'
 
 class QuestionForm extends Component {
     state = {
@@ -22,7 +24,8 @@ class QuestionForm extends Component {
     }
     onSubmit = (e) => {
         e.preventDefault()
-        console.log(this.state)
+        this.props.dispatch(handleSaveQuestion(this.props.authedUser, this.state.option1, this.state.option2))
+        this.props.history.push('/')
     }
     render() {
         return (
@@ -51,4 +54,10 @@ class QuestionForm extends Component {
     }
 }
 
-export default connect()(QuestionForm)
+function mapStateToProps({authedUser}) {
+    return {
+        authedUser
+    }
+}
+
+export default connect(mapStateToProps)(QuestionForm)

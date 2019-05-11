@@ -3,8 +3,21 @@ import { connect } from 'react-redux'
 import { Container, Card, Form, Button, Col, ProgressBar, Badge } from 'react-bootstrap'
 import NavigationBar from './NavigationBar'
 import '../css/questionView.css'
+import { handleAnswer } from '../actions/shared';
 
 class QuestionView extends Component {
+    state = {
+        selectedValue : null
+    }
+    handleChange = (e) => {
+        this.setState({
+            selectedValue: e.target.value
+        })
+    }
+    onSubmit = (e) => {
+        e.preventDefault()
+        this.props.dispatch(handleAnswer(this.props.authedUser, this.props.match.params.id, this.state.selectedValue))
+    }
     render() {
         let ques = this.props.q ? this.props.q : ''
         let answerMarkOp1 = this.props.q ? this.props.q.optionOne.votes.includes(this.props.authedUser) : null
@@ -63,20 +76,26 @@ class QuestionView extends Component {
                                         <Card.Text>
                                             Would you rather
                                         </Card.Text>
+                                        <Form.Group>
                                         <div className="mb-3">
                                             <Form.Check
                                                 type="radio"
-                                                id="1"
+                                                name="select"
                                                 label={ques ? ques.optionOne.text : ''}
+                                                onChange={this.handleChange}
+                                                value="optionOne"
                                             />
 
                                             <Form.Check
                                                 type="radio"
+                                                name="select"
                                                 label={ques ? ques.optionTwo.text : ''}
-                                                id="2"
+                                                onChange={this.handleChange}
+                                                value="optionTwo"
                                             />
                                         </div>
-                                        <Button variant="primary" block>Submit</Button>
+                                        </Form.Group>
+                                        <Button variant="primary" block onClick={this.onSubmit}>Submit</Button>
                                     </Card.Body>
                                 </Card>
                             </Col>
