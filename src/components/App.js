@@ -7,6 +7,7 @@ import Home from './Home';
 import QuestionForm from './QuestionForm';
 import Leaderboard from './Leaderboard';
 import QuestionView from './QuestionView'
+import  PrivateRoute from '../authentication/PrivateRoute'
 
 class App extends Component {
   componentDidMount() {
@@ -17,11 +18,11 @@ class App extends Component {
     return (
       <div className="App"> 
         <Router>
-              <Route path="/" exact component={ Home }/> 
-              <Route path="/add" exact component={ QuestionForm }/>
-              <Route path="/leaderboard" component={ Leaderboard }/>
-              <Route path="/login" component={ Login }/>
-              <Route path="/questions/:id" component={ QuestionView }/>
+              <PrivateRoute path="/" exact component={ Home }/> 
+              <PrivateRoute path="/add" component={ QuestionForm }/>
+              <PrivateRoute path="/leaderboard" component={ Leaderboard }/>
+              <Route path="/login" exact component={ Login }/>
+              <PrivateRoute path="/questions/:id" component={ QuestionView }/>
         </Router>
       </div>
     )

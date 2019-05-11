@@ -5,21 +5,37 @@ import Button from 'react-bootstrap/Button'
 import { Container, Col, Form } from 'react-bootstrap'
 import { setAuthedUser } from '../actions/authedUser'
 import '../css/login.css';
+import { fakeAuth } from '../authentication/auth'
+import { Redirect } from 'react-router-dom'
 
 class Login extends Component {
     state = {
-        userId: null
+        userId: null,
+        redirectToReferrer: false
     }
     handleChange = (e) => {
         this.setState({
             userId: e.target.value
         })
     }
-    onSubmit = (e) => {
+    login = (e) => {
         e.preventDefault()
+        fakeAuth.authenticate(() => {
+            this.setState({
+                redirectToReferrer: true
+            })
+        })
         this.props.dispatch(setAuthedUser(this.state.userId))
     }
     render() {
+        const { redirectToReferrer } = this.state
+        const { from } = this.props.location.state || { from : { pathname: '/' } }
+
+        if (redirectToReferrer === true) {
+            return (
+                <Redirect to={from} />
+            )
+        }
         return (
             <Container>
                 <Col xs={6}>
@@ -38,7 +54,7 @@ class Login extends Component {
                                         ))}
                                     </Form.Control>
                                 </Form.Group>
-                                <Button variant="primary" onClick={this.onSubmit}>Sign in</Button>
+                                <Button variant="primary" onClick={this.login}>Sign in</Button>
                             </Form>
                         </Card.Body>
                     </Card>

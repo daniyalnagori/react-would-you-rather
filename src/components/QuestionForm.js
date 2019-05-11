@@ -5,7 +5,6 @@ import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 import { Container, Col, Form } from 'react-bootstrap'
 import { handleSaveQuestion } from '../actions/shared'
-import { Link } from 'react-router-dom'
 
 class QuestionForm extends Component {
     state = {
@@ -34,7 +33,6 @@ class QuestionForm extends Component {
                 <Container>
                 <Col xs={6}>
                     <Card>
-                        <Card.Header as="h5">Would You Rather App</Card.Header>
                         <Card.Body>
                             <Card.Title>Would you Rather...</Card.Title>
                             <Form>

@@ -4,7 +4,7 @@ import { receiveQuestions, saveQuestion, saveQuestionAnswer } from './questions'
 import { setAuthedUser } from './authedUser'
 
 
-const AUTHED_ID = 'tylermcginnis'
+// const AUTHED_ID = 'tylermcginnis'
 
 export function handleInitialData() {
     return(dispatch) => {
@@ -30,16 +30,7 @@ export function handleSaveQuestion (author, optionOneText, optionTwoText) {
       })
     }
   }
-
-  // export function handleAnswer(authedUser, qid, answer) {
-  //   return (dispatch) => {
-  //     return saveQuestionAnswerApi({authedUser, qid, answer}).then(q => {
-  //       dispatch(saveQuestionAnswer(authedUser, qid, answer))
-  //       dispatch(saveUserAnswer(authedUser, qid, answer))
-  //     })
-  //   }
-  // }
-
+  
   export function handleAnswer (authedUser, qid, answer) {
     return (dispatch) => {
       dispatch(saveQuestionAnswer(authedUser, qid, answer))
