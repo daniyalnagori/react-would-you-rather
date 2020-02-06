@@ -48,7 +48,6 @@ class Home extends Component {
         )
     }
 }
-
 function mapStateToProps({ users, questions, authedUser }) {
     let allQuestions = Object.values(questions)
     let loggedInUser = users[authedUser] 
@@ -60,5 +59,4 @@ function mapStateToProps({ users, questions, authedUser }) {
                                         .sort((a, b) => b.timestamp - a.timestamp)
     }
 }
-
 export default connect(mapStateToProps)(Home)
