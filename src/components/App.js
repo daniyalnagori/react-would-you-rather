@@ -12,6 +12,7 @@ import  PrivateRoute from '../authentication/PrivateRoute'
 class App extends Component {
   componentDidMount() {
     this.props.dispatch(handleInitialData())
+    console.log('----------')
   }
 
   render() {
